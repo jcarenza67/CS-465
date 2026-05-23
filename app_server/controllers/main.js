@@ -1,15 +1,17 @@
+var fs = require('fs');
+
 const index = (req, res) => {
   res.render('index', { title: 'Travlr Getaways' });
 };
 
 const travel = (req, res) => {
-  res.render('travel', { title: 'Travlr Getaways' });
+  var trips = JSON.parse(fs.readFileSync('./data/trips.json', 'utf8'));
+  res.render('travel', { title: 'Travlr Getaways', trips });
 };
 
 const about = (req, res) => {
   res.render('about', { title: 'Travlr Getaways' });
 };
-
 
 const contact = (req, res) => {
   res.render('contact', { title: 'Travlr Getaways' });
