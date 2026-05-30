@@ -8,7 +8,7 @@ var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var hbs = require('hbs');
 
-const db = require('./app_api/models/db');
+const db = require('./app_server/models/db');
 db.connect();
 
 var app = express();
