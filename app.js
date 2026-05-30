@@ -8,6 +8,9 @@ var indexRouter = require('./app_server/routes/index');
 var usersRouter = require('./app_server/routes/users');
 var hbs = require('hbs');
 
+const db = require('./app_api/models/db');
+db.connect();
+
 var app = express();
 
 // view engine setup
