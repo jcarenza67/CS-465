@@ -9,7 +9,6 @@ var usersRouter = require('./app_server/routes/users');
 var hbs = require('hbs');
 
 const db = require('./app_server/models/db');
-db.connect();
 
 var app = express();
 

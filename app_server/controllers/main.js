@@ -1,12 +1,15 @@
-var fs = require('fs');
+const Trip = require('../models/travlr');
 
 const index = (req, res) => {
   res.render('index', { title: 'Travlr Getaways' });
 };
 
 const travel = (req, res) => {
-  var trips = JSON.parse(fs.readFileSync('./data/trips.json', 'utf8'));
-  res.render('travel', { title: 'Travlr Getaways', trips });
+  Trip.find({}).then((trips) => {
+    res.render('travel', { title: 'Travlr Getaways', trips });
+  }).catch((err) => {
+    res.status(500).send(err);
+  });
 };
 
 const about = (req, res) => {
