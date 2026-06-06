@@ -1,15 +1,29 @@
-const Trip = require('../models/travlr');
+const fetch = require('node-fetch');
+const tripsEndpoint = 'http://localhost:3000/api/trips';
+const options = {
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json'
+  }
+};
 
 const index = (req, res) => {
   res.render('index', { title: 'Travlr Getaways' });
 };
 
-const travel = (req, res) => {
-  Trip.find({}).then((trips) => {
-    res.render('travel', { title: 'Travlr Getaways', trips });
-  }).catch((err) => {
-    res.status(500).send(err);
-  });
+const travel = async (req, res) => {
+  fetch(tripsEndpoint, options)
+    .then(res => res.json())
+    .then(json => {
+      if (!json || !Array.isArray(json)) {
+        return res.status(404).json({ message: 'No trips found' });
+      }
+      if (json.length === 0) {
+        return res.status(404).json({ message: 'No trips found in database' });
+      }
+      res.render('travel', { title: 'Travlr Getaways', trips: json });
+    })
+    .catch(err => res.status(500).send(err.message));
 };
 
 const about = (req, res) => {
