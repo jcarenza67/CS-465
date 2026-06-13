@@ -82,4 +82,20 @@ const tripsUpdateTrip = async (req, res) => {
   }
 };
 
-module.exports = { tripsList, tripsFindByCode, tripsAddTrip, tripsUpdateTrip };
+// DELETE: /api/trips/:tripCode - deletes a single trip
+const tripsDeleteTrip = async (req, res) => {
+  const q = await Trip
+    .findOneAndDelete({ code: req.params.tripCode })
+    .exec();
+  if (!q) {
+    return res
+      .status(404)
+      .json(q);
+  } else {
+    return res
+      .status(204)
+      .json(q);
+  }
+};
+
+module.exports = { tripsList, tripsFindByCode, tripsAddTrip, tripsUpdateTrip, tripsDeleteTrip };
