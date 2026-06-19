@@ -1,6 +1,8 @@
 <div class="row">
   <div class="col-12 mb-3">
-    <button class="btn btn-primary" (click)="addTrip()">Add Trip</button>
+    @if (isLoggedIn()) {
+      <button class="btn btn-primary" (click)="addTrip()">Add Trip</button>
+    }
   </div>
   @if (trips.length > 0) {
     @for (trip of trips; track trip.code) {

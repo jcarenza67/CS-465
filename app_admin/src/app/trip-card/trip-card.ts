@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Trip } from '../models/trip';
 import { TripDataService } from '../services/trip-data.service';
+import { AuthenticationService } from '../services/authentication';
 
 @Component({
   selector: 'app-trip-card',
@@ -16,10 +17,15 @@ export class TripCard implements OnInit {
 
   constructor(
     private router: Router,
-    private tripDataService: TripDataService
+    private tripDataService: TripDataService,
+    private authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {}
+
+  public isLoggedIn(): boolean {
+    return this.authenticationService.isLoggedIn();
+  }
 
   public editTrip(trip: Trip): void {
     localStorage.setItem('tripCode', trip.code);
@@ -27,16 +33,16 @@ export class TripCard implements OnInit {
   }
 
   public deleteTrip(trip: Trip): void {
-  if (confirm(`Are you sure you want to delete ${trip.name}?`)) {
-    this.tripDataService.deleteTrip(trip.code)
-      .subscribe({
-        next: () => {
-          window.location.reload();
-        },
-        error: (error: any) => {
-          console.log('Error: ' + error);
-        }
-      });
+    if (confirm(`Are you sure you want to delete ${trip.name}?`)) {
+      this.tripDataService.deleteTrip(trip.code)
+        .subscribe({
+          next: () => {
+            window.location.reload();
+          },
+          error: (error: any) => {
+            console.log('Error: ' + error);
+          }
+        });
     }
   }
 }
